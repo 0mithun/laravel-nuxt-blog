@@ -64,7 +64,7 @@ class LoginController extends Controller {
         ] );
     }
 
-    public function sendLoginFailedResponse( Request $request ) {
+    public function sendFailedLoginResponse( Request $request ) {
         $user = $this->guard()->user();
 
         if ( $user instanceof MustVerifyEmail && !$user->hasVerifiedEmail() ) {
@@ -72,5 +72,11 @@ class LoginController extends Controller {
         }
 
         throw ValidationException::withMessages( [$this->username() => 'Invalid Credentials'] );
+    }
+
+    public function logout() {
+        $this->guard()->logout();
+
+        return response()->json( ['message' => 'Logged out successfully'] );
     }
 }
