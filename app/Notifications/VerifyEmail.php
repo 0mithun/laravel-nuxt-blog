@@ -9,7 +9,7 @@ class VerifyEmail extends NotificationsVerifyEmail {
     // use Queueable;
 
     protected function verificationUrl( $notifiable ) {
-        $appUrl = config( 'app.client_url', conig( 'app.app_url' ) );
+        $appUrl = config( 'app.client_url', config( 'app.app_url' ) );
 
         $url = URL::temporarySignedRoute( 'verification.verify', now()->addMinutes( 60 ), ['user' => $notifiable->id] );
 

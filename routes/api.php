@@ -12,8 +12,8 @@ Route::group( ['middleware' => ['auth:api']], function () {
 Route::group( ['middleware' => ['guest:api']], function () {
     Route::group( ['namespace' => 'Auth'], function () {
         Route::post( 'register', 'RegisterController@register' );
-        Route::post( 'verification/verify', 'VerifictionController@verify' )->name( 'verification.verify' );
-        Route::post( 'verification/resend', 'VerifictionController@resend' );
+        Route::post( 'verification/verify', 'VerificationController@verify' )->name( 'verification.verify' );
+        Route::post( 'verification/resend', 'VerificationController@resend' );
     } );
 
 } );
