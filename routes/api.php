@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 use Illuminate\Support\Facades\Route;
 
@@ -8,6 +8,9 @@ Route::get( '/me', 'User\MeController@getMe' );
 //Route Group  for authenticated user only
 Route::group( ['middleware' => ['auth:api']], function () {
     Route::post( '/logout', 'Auth\LoginController@logout' );
+
+    Route::put('settings/profile','User\SettingsController@updateProfile');
+    Route::put('settings/password','User\SettingsController@updatePassword');
 } );
 
 //Route Group for guest only
@@ -19,5 +22,7 @@ Route::group( ['middleware' => ['guest:api'], 'namespace' => 'Auth'], function (
 
     Route::post( '/password/email', 'ForgotPasswordController@sendResetLinkEmail' );
     Route::post( '/password/reset', 'ResetPasswordController@reset' );
+
+
 
 } );
