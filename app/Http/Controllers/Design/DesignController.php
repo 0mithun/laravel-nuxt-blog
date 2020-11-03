@@ -5,12 +5,31 @@ namespace App\Http\Controllers\Design;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\DesignResource;
 use App\Models\Design;
+use App\Repositories\Contracts\DesignContract;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class DesignController extends Controller
 {
+
+    /**
+     * @var DesignContract
+     */
+    protected $designs;
+
+
+    public function __construct(DesignContract $designs)
+    {
+        $this->designs = $designs;
+    }
+
+    public function index(){
+
+        return DesignResource::collection($this->designs->all());
+    }
+
+
     public function update(Request $request, $id){
         $design = Design::findOrFail($id);
         $this->authorize('update', $design);
