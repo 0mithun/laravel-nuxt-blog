@@ -13,6 +13,8 @@ Route::group( ['middleware' => ['auth:api']], function () {
     Route::put('settings/password','User\SettingsController@updatePassword');
 
     Route::post('designs','Design\UploadController@upload');
+    Route::put('designs/{id}','Design\DesignController@update');
+    Route::delete('designs/{id}','Design\DesignController@destroy');
 } );
 
 //Route Group for guest only
