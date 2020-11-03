@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
+use Cviebrock\EloquentTaggable\Taggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
 class Design extends Model
 {
+    use Taggable;
+
+
     protected $fillable = [
         'user_id','image','title','slug','description','close_to_comment','is_live','upload_successful','disk',
     ];
@@ -27,4 +31,6 @@ class Design extends Model
     public function getImagePath($size){
         return Storage::disk($this->disk)->url("uploads/designs/{$size}/".$this->image);
     }
+
+
 }

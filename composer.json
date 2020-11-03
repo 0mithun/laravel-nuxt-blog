@@ -17,7 +17,8 @@
         "laravel/framework": "^7.24",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.2",
-        "tymon/jwt-auth": "dev-develop"
+        "tymon/jwt-auth": "dev-develop",
+        "cviebrock/eloquent-taggable": "^7.0"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
