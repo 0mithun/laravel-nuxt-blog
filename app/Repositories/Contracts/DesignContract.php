@@ -25,7 +25,21 @@ interface DesignContract extends BaseContract
 
 
     /**
+     * @param int $designId
+     * @param array $data
      * @return mixed
      */
-    public function allLive();
+    public function addComment(int $designId, array  $data);
+
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function like(int $id);
+
+    /**
+     * @param int $designId
+     * @return mixed
+     */
+    public function isLikedByUser(int $designId);
 }

@@ -34,7 +34,7 @@ class DesignController extends Controller
             new LatestFirst(),
             new IsLive(),
             new ForUser(1),
-            new EagerLoad(['user']),
+            new EagerLoad(['user','comments']),
         ])->all();
         return DesignResource::collection($designs );
     }
@@ -85,5 +85,16 @@ class DesignController extends Controller
         $this->designs->delete($id);
 
         return response()->json(['message'=>'Record deleted successfully'], 200);
+    }
+
+    public function like($id){
+        $this->designs->like($id);
+
+        return response()->json(['message'=>'Successfull'], 200);
+    }
+
+    public function checkIfUserHasLiked($designId){
+        $isLiked = $this->designs->isLikedByUser($designId);
+        return response()->json(['liked'=>$isLiked], 200);
     }
 }

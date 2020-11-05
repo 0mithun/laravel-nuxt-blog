@@ -16,9 +16,24 @@ Route::group( ['middleware' => ['auth:api']], function () {
     Route::put('settings/profile','User\SettingsController@updateProfile');
     Route::put('settings/password','User\SettingsController@updatePassword');
 
+    //Designs
     Route::post('designs','Design\UploadController@upload');
     Route::put('designs/{id}','Design\DesignController@update');
     Route::delete('designs/{id}','Design\DesignController@destroy');
+
+
+    //Comments
+    Route::post('designs/{id}/comments','Design\CommentController@store');
+    Route::put('comment/{id}','Design\CommentController@update');
+    Route::delete('comment/{id}','Design\CommentController@destroy');
+
+    //Likes and unlike
+    Route::post('designs/{id}/like','Design\DesignController@like');
+    Route::get('designs/{id}/liked','Design\DesignController@checkIfUserHasLiked');
+
+    Route::post('comments/{id}/like','Design\CommentController@like');
+    Route::get('comments/{id}/liked','Design\CommentController@checkIfUserHasLiked');
+
 } );
 
 //Route Group for guest only

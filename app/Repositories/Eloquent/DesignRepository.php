@@ -22,10 +22,40 @@ class DesignRepository extends BaseRepository implements DesignContract
         $this->find($id)->retag($data);
     }
 
+
     /**
+     * @param int $designId
+     * @param array $data
      * @return mixed
      */
-    public function allLive(){
-        return $this->model->where('is_live', true)->get();
+    public function addComment(int $designId, array  $data){
+        $design = $this->find($designId);
+        $comment = $design->comments()->create($data);
+
+        return  $comment;
+    }
+
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function like(int $id){
+        $design = $this->find($id);
+        if($design->isLiked()){
+            $design->unlike();
+        }else{
+            $design->like();
+        }
+    }
+
+    /**
+     * @param int $designId
+     * @return mixed
+     */
+
+    public function isLikedByUser($designId){
+        $design = $this->find($designId);
+
+        return $design->isLiked();
     }
 }
