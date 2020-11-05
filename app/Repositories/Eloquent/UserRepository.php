@@ -7,10 +7,9 @@ namespace App\Repositories\Eloquent;
 use App\Models\User;
 use App\Repositories\Contracts\UserContract;
 
-class UserRepository implements UserContract
+class UserRepository extends BaseRepository implements UserContract
 {
-    public function all()
-    {
-       return User::all();
+    public function model(){
+        return User::class;
     }
 }

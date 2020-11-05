@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\DesignResource;
 use App\Models\Design;
 use App\Repositories\Contracts\DesignContract;
+use App\Repositories\Eloquent\Criteria\EagerLoad;
+use App\Repositories\Eloquent\Criteria\ForUser;
+use App\Repositories\Eloquent\Criteria\IsLive;
+use App\Repositories\Eloquent\Criteria\LatestFirst;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -26,12 +30,22 @@ class DesignController extends Controller
 
     public function index(){
 
-        return DesignResource::collection($this->designs->all());
+        $designs = $this->designs->withCriteria([
+            new LatestFirst(),
+            new IsLive(),
+            new ForUser(1),
+            new EagerLoad(['user']),
+        ])->all();
+        return DesignResource::collection($designs );
+    }
+
+    public function findDesign($id){
+        return new DesignResource($this->designs->find($id));
     }
 
 
     public function update(Request $request, $id){
-        $design = Design::findOrFail($id);
+        $design = $this->designs->find($id);
         $this->authorize('update', $design);
 
         $this->validate($request, [
@@ -42,7 +56,7 @@ class DesignController extends Controller
         ]);
 
 
-        $design->update([
+       $design =  $this->designs->update($id, [
             'title'=>$request->title,
             'description'=> $request->description,
             'slug'  => Str::slug($request->title),
@@ -50,14 +64,14 @@ class DesignController extends Controller
         ]);
 
         //Apply the tags
-        $design->retag($request->tags);
+       $this->designs->applyTags($id, $request->tags);
 
         return new DesignResource($design);
     }
 
 
     public function destroy($id){
-        $design = Design::findOrFail($id);
+        $design = $this->designs->find($id);
         $this->authorize('delete', $design);
 
         //Delete the files associated to the record
@@ -68,7 +82,7 @@ class DesignController extends Controller
         }
 
         //Delete the record
-        $design->delete();
+        $this->designs->delete($id);
 
         return response()->json(['message'=>'Record deleted successfully'], 200);
     }

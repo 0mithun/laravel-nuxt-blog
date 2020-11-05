@@ -4,7 +4,7 @@
 namespace App\Repositories\Contracts;
 
 
-interface UserContract
+interface UserContract extends BaseContract
 {
     public function all();
 }

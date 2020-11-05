@@ -5,7 +5,10 @@ use Illuminate\Support\Facades\Route;
 //Public Routes
 Route::get( '/me', 'User\MeController@getMe' );
 Route::get('designs','Design\DesignController@index');
+Route::get('designs/{id}','Design\DesignController@findDesign');
 Route::get('users','User\UserController@index');
+
+
 //Route Group  for authenticated user only
 Route::group( ['middleware' => ['auth:api']], function () {
     Route::post( '/logout', 'Auth\LoginController@logout' );

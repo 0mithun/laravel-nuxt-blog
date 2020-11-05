@@ -19,6 +19,7 @@ class UserResource extends JsonResource {
             'name'              => $this->name,
             'username'          => $this->username,
             'email'             => $this->email,
+            'designs'           => $this->designs,
             'create_date'       => [
                 'created_date_human' => $this->created_at->diffForHumans(),
                 'created_at'         => $this->created_at,
