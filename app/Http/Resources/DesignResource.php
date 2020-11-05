@@ -36,6 +36,10 @@ class DesignResource extends JsonResource
             ],
             'user'  => new UserResource($this->whenLoaded('user')),
             'comments'  => CommentResource::collection($this->whenLoaded('comments')),
+            'team'  => $this->team ?  [
+                'name'  => $this->team->name,
+                'slug'  => $this->team->slug,
+            ]: null
         ];
     }
 }

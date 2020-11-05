@@ -13,7 +13,7 @@ class Design extends Model
 
 
     protected $fillable = [
-        'user_id','image','title','slug','description','close_to_comment','is_live','upload_successful','disk',
+        'user_id','image','title','slug','description','close_to_comment','is_live','upload_successful','disk','team_id'
     ];
 
 
@@ -24,6 +24,10 @@ class Design extends Model
     public function comments(){
         return $this->morphMany(Comment::class,'commentable')
             ->orderBy('created_at','ASC');
+    }
+
+    public function team(){
+        return $this->belongsTo(Team::class);
     }
 
 
