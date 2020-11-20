@@ -2,14 +2,18 @@
 
 namespace App\Providers;
 
+use App\Repositories\Contracts\ChatContract;
 use App\Repositories\Contracts\CommentContract;
 use App\Repositories\Contracts\DesignContract;
 use App\Repositories\Contracts\InvitationContract;
+use App\Repositories\Contracts\MessageContract;
 use App\Repositories\Contracts\TeamContract;
 use App\Repositories\Contracts\UserContract;
+use App\Repositories\Eloquent\ChatRepository;
 use App\Repositories\Eloquent\CommentRepository;
 use App\Repositories\Eloquent\DesignRepository;
 use App\Repositories\Eloquent\InvitationRepository;
+use App\Repositories\Eloquent\MessageRepository;
 use App\Repositories\Eloquent\TeamRepository;
 use App\Repositories\Eloquent\UserRepository;
 use Illuminate\Support\ServiceProvider;
@@ -38,5 +42,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(CommentContract::class, CommentRepository::class);
         $this->app->bind(TeamContract::class,TeamRepository::class);
         $this->app->bind(InvitationContract::class, InvitationRepository::class);
+        $this->app->bind(MessageContract::class, MessageRepository::class);
+        $this->app->bind(ChatContract::class, ChatRepository::class);
     }
 }
