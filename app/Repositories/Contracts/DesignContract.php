@@ -4,6 +4,8 @@
 namespace App\Repositories\Contracts;
 
 
+use Illuminate\Http\Request;
+
 /**
  * Interface DesignContract
  * @package App\Repositories\Contracts
@@ -42,4 +44,6 @@ interface DesignContract extends BaseContract
      * @return mixed
      */
     public function isLikedByUser(int $designId);
+
+    public function search(Request $request);
 }

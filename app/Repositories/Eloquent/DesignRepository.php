@@ -6,6 +6,7 @@ namespace App\Repositories\Eloquent;
 
 use App\Models\Design;
 use App\Repositories\Contracts\DesignContract;
+use Illuminate\Http\Request;
 
 class DesignRepository extends BaseRepository implements DesignContract
 {
@@ -58,4 +59,41 @@ class DesignRepository extends BaseRepository implements DesignContract
 
         return $design->isLiked();
     }
+
+    public function search(Request $request)
+    {
+        $query = (new $this->model)->newQuery();
+        $query->where('is_live', true);
+
+        //Return only designs with comments
+        if($request->has_comment){
+            $query->has('comments');
+        }
+
+        //Return only designs assigned to teams
+        if($request->has_team){
+            $query->has('team');
+        }
+
+        //Search title & description for provided string
+         if($request->q){
+             $query->where(function($q) use($request){
+                    $q->where('title','LIKE',"%{$request->q}%")
+                        ->orWhere('description','LIKE',"%{$request->q}%");
+             });
+         }
+
+         //Order the query by likes or latest first
+        if($request->orderBy=='likes'){
+            $query->withCount('likes');
+            $query->orderByDesc('likes_count');
+        }else{
+            $query->latest();
+        }
+
+
+        return $query->get();
+    }
+
+
 }
