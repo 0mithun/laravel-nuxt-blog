@@ -43,6 +43,12 @@ class DesignController extends Controller
         return new DesignResource($this->designs->find($id));
     }
 
+    public function findDesignBySlug($slug){
+        $design = $this->designs->withCriteria([
+            new IsLive()
+        ])-> findWhereFirst('slug', $slug);
+        return new DesignResource($design);
+    }
 
     public function update(Request $request, $id){
         $design = $this->designs->find($id);
@@ -103,6 +109,25 @@ class DesignController extends Controller
 
     public function search(Request $request){
         $designs = $this->designs->search($request);
+
+        return DesignResource::collection($designs);
+    }
+
+
+    public function getForTeam($teamId){
+        $designs = $this->designs->withCriteria([
+            new IsLive(),
+        ])->findWhere('team_id', $teamId);
+
+        return DesignResource::collection($designs);
+    }
+
+    public function findDesignByUserId($id){
+        $designs = $this->designs
+            ->withCriteria([
+                new IsLive()
+            ])
+            ->findWhere('user_id', $id);
 
         return DesignResource::collection($designs);
     }

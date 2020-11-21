@@ -111,6 +111,15 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail {
         'location',
     ];
 
+    protected $appends =[
+        'photo_url'
+    ];
+
+    public function getPhotoUrlAttribute(){
+        return 'https://ui-avatars.com/api/?name='.urlencode($this->name).'&rounded=true&background=69bdd2&bold=true&color=ffffff';
+    }
+
+
     /**
      * The attributes that should be hidden for arrays.
      *

@@ -6,9 +6,15 @@ use Illuminate\Support\Facades\Route;
 Route::get( '/me', 'User\MeController@getMe' );
 Route::get('designs','Design\DesignController@index');
 Route::get('designs/{id}','Design\DesignController@findDesign');
-Route::get('users','User\UserController@index');
+Route::get('designs/slug/{slug}','Design\DesignController@findDesignBySlug');
 
+Route::get('users','User\UserController@index');
+Route::get('user/{username}','User\UserController@findByUserName');
+Route::get('users/{id}/designs','Design\DesignController@findDesignByUserId');
+
+//Team
  Route::get('teams/slug/{slug}','Teams\TeamsController@findBySlug');
+ Route::get('teams/{id}/designs','Design\DesignController@getForTeam');
 
 
  //Search Designs
