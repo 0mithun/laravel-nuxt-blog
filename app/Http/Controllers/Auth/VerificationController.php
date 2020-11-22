@@ -42,19 +42,17 @@ class VerificationController extends Controller {
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function verify( Request $request ) {
-        $user = User::find( $request->user );
-
+    public function verify( Request $request, User $user ) {
         if ( !$user ) {
             return response()->json( ['errors' => [
-                'message' => 'Invalid Verification Link',
+                'message' => 'Invalid Verification Link ',
             ]], 422 );
         }
 
         //Check if the url is a valid signed URL
         if ( !URL::hasValidSignature( $request ) ) {
             return response()->json( ['errors' => [
-                'message' => 'Invalid Verification Link',
+                'message' => 'Invalid Verification Link or signature',
             ]], 422 );
         }
 

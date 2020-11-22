@@ -15,7 +15,7 @@ class TeamRepository extends BaseRepository implements TeamContract
 
     public function fetchUserTeams()
     {
-        return auth()->user()->teams();
+        return auth()->user()->teams;
     }
 
 
