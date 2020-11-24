@@ -33,11 +33,13 @@ Route::group( ['middleware' => ['auth:api']], function () {
     Route::put('designs/{id}','Design\DesignController@update');
     Route::delete('designs/{id}','Design\DesignController@destroy');
 
+    Route::get('designs/{id}/by-user','Design\DesignController@userOwnsDesign');
+
 
     //Comments
     Route::post('designs/{id}/comments','Design\CommentController@store');
-    Route::put('comment/{id}','Design\CommentController@update');
-    Route::delete('comment/{id}','Design\CommentController@destroy');
+    Route::put('comments/{id}','Design\CommentController@update');
+    Route::delete('comments/{id}','Design\CommentController@destroy');
 
     //Likes and unlike
     Route::post('designs/{id}/like','Design\DesignController@like');

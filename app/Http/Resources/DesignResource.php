@@ -20,7 +20,7 @@ class DesignResource extends JsonResource
             'slug' => $this->slug,
             'is_live' => $this->is_live,
             'likes_count'=> $this->likes()->count(),
-            'image' => $this->images ,
+            'images' => $this->images ,
             'description'=> $this->description,
             'tag_list'=>[
                 'tags'  => $this->tagArray,
@@ -37,6 +37,7 @@ class DesignResource extends JsonResource
             'user'  => new UserResource($this->whenLoaded('user')),
             'comments'  => CommentResource::collection($this->whenLoaded('comments')),
             'team'  => $this->team ?  [
+                'id'    => $this->team->id,
                 'name'  => $this->team->name,
                 'slug'  => $this->team->slug,
             ]: null

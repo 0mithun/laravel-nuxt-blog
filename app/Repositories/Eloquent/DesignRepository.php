@@ -92,7 +92,7 @@ class DesignRepository extends BaseRepository implements DesignContract
         }
 
 
-        return $query->get();
+        return $query->with(['user'])->get();
     }
 
 

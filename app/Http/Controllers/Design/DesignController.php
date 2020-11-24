@@ -34,7 +34,8 @@ class DesignController extends Controller
             new LatestFirst(),
             new IsLive(),
             new ForUser(1),
-            new EagerLoad(['user','comments']),
+            new EagerLoad(['user','comments'])
+            ,
         ])->all();
         return DesignResource::collection($designs );
     }
@@ -45,7 +46,8 @@ class DesignController extends Controller
 
     public function findDesignBySlug($slug){
         $design = $this->designs->withCriteria([
-            new IsLive()
+            new IsLive(),
+            new EagerLoad(['user','comments'])
         ])-> findWhereFirst('slug', $slug);
         return new DesignResource($design);
     }
@@ -117,6 +119,7 @@ class DesignController extends Controller
     public function getForTeam($teamId){
         $designs = $this->designs->withCriteria([
             new IsLive(),
+
         ])->findWhere('team_id', $teamId);
 
         return DesignResource::collection($designs);
@@ -130,5 +133,15 @@ class DesignController extends Controller
             ->findWhere('user_id', $id);
 
         return DesignResource::collection($designs);
+    }
+
+
+    public function userOwnsDesign($id){
+        $design = $this->designs
+            ->withCriteria([
+                new ForUser(auth()->id())
+            ])
+            ->findWhereFirst('id', $id);
+        return new DesignResource($design);
     }
 }

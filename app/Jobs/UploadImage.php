@@ -54,16 +54,16 @@ class UploadImage implements ShouldQueue
 
             ;
             //Store image to permanent disk
-             if(Storage::put('uploads/designs/original/'.$file_name, fopen($original_file, 'r+'))){
+             if(Storage::put('public/uploads/designs/original/'.$file_name, fopen($original_file, 'r+'))){
                 File::delete($original_file);
              }
 
-            if(Storage::put('uploads/designs/large/'.$file_name, fopen($large, 'r+'))){
+            if(Storage::put('public/uploads/designs/large/'.$file_name, fopen($large, 'r+'))){
                 File::delete($large);
             }
 
 
-            if(Storage::put('uploads/designs/thumbnail/'.$file_name, fopen($thumbnail, 'r+'))){
+            if(Storage::put('public/uploads/designs/thumbnail/'.$file_name, fopen($thumbnail, 'r+'))){
                 File::delete($thumbnail);
             }
 

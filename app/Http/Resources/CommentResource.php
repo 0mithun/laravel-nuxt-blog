@@ -15,7 +15,7 @@ class CommentResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'    => $this->body,
+            'id'    => $this->id,
             'body'  => $this->body,
             'created_at_dates'  => [
                 'created_at_human'  => $this->created_at->diffForHumans(),
